@@ -14,8 +14,9 @@ val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
 
 dependencies {
+    implementation("io.quarkus:quarkus-container-image-docker")
     implementation("io.quarkus:quarkus-container-image-jib")
-    implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+    implementation(enforcedPlatform("$quarkusPlatformGroupId:$quarkusPlatformArtifactId:$quarkusPlatformVersion"))
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
@@ -27,6 +28,10 @@ dependencies {
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
     implementation("io.quarkus:quarkus-jdbc-postgresql") // or another database driver
     implementation("io.quarkus:quarkus-kubernetes")
+    // AWS SDK
+    implementation(platform("software.amazon.awssdk:bom:2.21.0"))
+    implementation("software.amazon.awssdk:secretsmanager")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 group = "dev.estebanparra.plutus"

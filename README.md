@@ -4,6 +4,49 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
 
+## Database Configuration
+
+This application uses **AWS Secrets Manager** for database credentials.
+
+### Prerequisites
+
+1. **PostgreSQL Database Running**:
+```bash
+docker run --name plutus_db \
+  -e POSTGRES_PASSWORD=plutus_pass \
+  -e POSTGRES_USER=plutus \
+  -e POSTGRES_DB=plutus_db \
+  -p 5432:5432 -d postgres:16-alpine
+```
+
+2. **AWS Credentials**: Configure in `~/.aws/credentials`:
+```ini
+[default]
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+```
+
+3. **AWS Region**: Set in `~/.aws/config`:
+```ini
+[default]
+region = us-east-2
+```
+
+4. **AWS Secret**: Create a secret named "plutus" in AWS Secrets Manager:
+```json
+{
+  "DB_USER": "plutus",
+  "DB_PASSWORD": "plutus_pass"
+}
+```
+
+### Testing AWS Connection
+
+Run the test script to verify AWS is configured correctly:
+```bash
+./test-aws-connection.sh
+```
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
